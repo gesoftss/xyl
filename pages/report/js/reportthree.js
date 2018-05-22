@@ -14,7 +14,35 @@ var PageReportthree = function(){
                 console.log(data);
 
             });*/
-           this.funSearch();
+            var _reportThreeGrid = mini.get("reportthreeGrid");
+            // _reportThreeGrid.set({
+            //     columns: [
+            //         { type: "indexcolumn" },
+            //         { field: "loginname", width: 120, headerAlign: "center", allowSort: true, header: "员工账号"},
+            //         { field: "age", width: 100, headerAlign: "center", allowSort: true, header: "年龄"},
+            //         { field: "birthday", width: 100, headerAlign: "center", dateFormat: "yyyy-MM-dd H:mm", allowSort: true, header: "生日" },
+            //         { field: "remarks", width: 120, headerAlign: "center", allowSort: true, header: "备注", editor: { type: "textarea"} },
+            //         { field: "gender", type: "comboboxcolumn", autoShowPopup: true, width: 100, headerAlign: "center", header: "性别" },
+            //         { field: "country", type: "comboboxcolumn", width: 100, headerAlign: "center", header: "国家"},
+            //         { field: "married", trueValue: 1, falseValue: 0, type: "checkboxcolumn", width: 60, headerAlign: "center", header: "婚否" }
+            //     ]
+            // });
+            _reportThreeGrid.on("load", function (e) {
+                //console.log(e);
+                var grid = e.data;
+                var len = grid.length;
+                var merges = [];
+                if (len > 0) {
+                    for (var i = 0; i < len/9; i++) {
+                        merges.push({rowIndex: i * 9, columnIndex: 1, rowSpan: 9, colSpan: 0},
+                                    {rowIndex: i * 9, columnIndex: 4, rowSpan: 9, colSpan: 0},
+                                    {rowIndex: i * 9, columnIndex: 5, rowSpan: 9, colSpan: 0});
+                    }
+                }
+                //_reportThreeGrid.mergeColumns(["shipId"]);
+                _reportThreeGrid.mergeCells(merges);
+            });
+            this.funSearch();
         },
         funSearch : function()
         {
@@ -22,6 +50,17 @@ var PageReportthree = function(){
         	var reportthreeForm = new mini.Form("reportthreeForm");
         	var postData = reportthreeForm.getData();
             postData.key =mini.get("key").getFormValue();
+            var month = (postData.key).split("-");
+            this.reportthreeGrid.set({
+                columns: [
+                    { type: "indexcolumn", headerAlign: "center", width: 30, header: "序号" },
+                    { field: "shipId", name: "shipId", headerAlign: "center", width: 120, header: "船号" },
+                    { field: "eventId", name: "eventId", headerAlign: "center", width: 120, header: "反馈情况" },
+                    { field: "sl", name: "sl", headerAlign: "center", width: 120, header: month[1] == undefined ? "月份" : Number(month[1]) + "月" },
+                    { field: "zs", name: "zs", headerAlign: "center", width: 120, header: "航次(趟次)" },
+                    { field: "bz", name: "bz", headerAlign: "center", width: 120, header: "备注" }
+                ]
+            });
         	this.reportthreeGrid.load(postData);
         },
         funOperRenderer : function(e)
