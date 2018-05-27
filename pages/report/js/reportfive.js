@@ -10,10 +10,22 @@ var PageReportfive = function(){
             this.basePath = PageMain.basePath;
             this.reportfiveGrid = mini.get("reportfiveGrid");
             this.reportfiveGrid.setUrl(PageMain.defaultOption.httpUrl + "/dispatch/getReportFiveList");
-            PageMain.callAjax(PageMain.defaultOption.httpUrl + "/dispatch/getReportFiveList", {queryParamFlag:1}, function (data) {
-                console.log(data);
 
+
+           /* PageMain.callAjax(PageMain.defaultOption.httpUrl + "/dispatch/getReportFour2OneList", {queryParamFlag:1,key:'2018-05'}, function (data) {
+                console.log(data);
             });
+            PageMain.callAjax(PageMain.defaultOption.httpUrl + "/dispatch/getReportFour2TwoList", {queryParamFlag:1,key:'2018-05'}, function (data) {
+                console.log(data);
+            });
+            PageMain.callAjax(PageMain.defaultOption.httpUrl + "/dispatch/getReportFour2ThreeList", {queryParamFlag:1,key:'2018-05'}, function (data) {
+                console.log(data);
+            });
+            PageMain.callAjax(PageMain.defaultOption.httpUrl + "/dispatch/getReportFour2FourList", {queryParamFlag:1,key:'2018-05'}, function (data) {
+                console.log(data);
+            });
+*/
+
            this.funSearch();
         },
         funSearch : function()
@@ -28,8 +40,8 @@ var PageReportfive = function(){
         funReset : function()
         {
         	var reportfiveForm = new mini.Form("reportfiveForm");
-        	reportfiveForm.setData();
-        	mini.get("queryParamFlag").setValue("1");
+            reportfiveForm.setData();
+            mini.get("queryParamFlag").setValue("1");
             this.reportfiveGrid.load(reportfiveForm.getData());
         },
 

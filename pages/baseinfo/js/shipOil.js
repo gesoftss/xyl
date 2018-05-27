@@ -4,13 +4,18 @@ var PageShipOil = function(){
         defaultOption: {
             basePath:"",
             shipOilGrid : null,
+            statusFly:[{id:1, name:"预扣"},{id:2, name:"实扣"}],
+            shipNoData:[]
         },
         init :function ()
         {
             mini.parse();
             this.basePath = PageMain.basePath;
             this.shipOilGrid = mini.get("shipOilGrid");
-            this.shipOilGrid.setUrl(PageMain.defaultOption.httpUrl + "/shipOil/getList")
+            this.shipOilGrid.setUrl(PageMain.defaultOption.httpUrl + "/shipOil/getList");
+            PageMain.callAjax(PageMain.defaultOption.httpUrl + "/ship/getList",{pageSize:100000}, function (data) {
+                PageShipOil.defaultOption.shipNoData = data.data.list;
+            });
             this.funSearch();
         },
         funSearch : function()
@@ -43,6 +48,29 @@ var PageShipOil = function(){
             	PageMain.funShowMessageBox("请选择一条记录");
             }
         },
+        funShipIdRenderer : function (e)//船号转码
+        {
+            for(var nItem = 0; nItem < PageShipOil.defaultOption.shipNoData.length; nItem++)
+            {
+
+                if(e.value == PageShipOil.defaultOption.shipNoData[nItem].id)
+                {
+                    return PageShipOil.defaultOption.shipNoData[nItem].shipNo;
+                }
+            }
+            return e.value;
+        },
+        funRendererStatus: function (e)
+        {
+            for(var nItem = 0; nItem < PageShipOil.defaultOption.statusFly.length; nItem++)
+            {
+                if(e.value == PageShipOil.defaultOption.statusFly[nItem].id)
+                {
+                    return PageShipOil.defaultOption.statusFly[nItem].name;
+                }
+            }
+            return e.value;
+        },
         funOperRenderer : function(e)
         {
             return '<a class="mini-button-icon mini-iconfont icon-detail" style="display: inline-block;  height:16px;padding:0 10px;" title="详情查看" href="javascript:PageShipOil.funDetail()"></a>';
@@ -56,6 +84,8 @@ var PageShipOil = function(){
         funOpenInfo : function(paramData)
         {
         	var me = this;
+            paramData.row.shipIdFly = me.defaultOption.shipNoData;
+            paramData.row.statusData = me.defaultOption.statusFly;
         	mini.open({
                 url: PageMain.funGetRootPath() + "/pages/baseinfo/shipOil_add.html",
                 title: paramData.title,

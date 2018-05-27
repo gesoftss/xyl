@@ -15,8 +15,8 @@
 				<lable class="form-label">关键字：</lable>
                 <input name="key" id="key" class="mini-textbox" emptyText="请输入船号"  style="width:160px;"/>
                 <input id="queryParamFlag" name="queryParamFlag" value="1" class="mini-hidden" />
-                <a class="mini-button" iconCls="icon-search" onclick="PageShip.funSearch()" plain="true"><label>查询</label></a>
-                <a class="mini-button" iconCls="icon-reset" onclick="PageShip.funReset()" plain="true"><label>重置</label></a>
+                <a class="mini-button" iconCls="icon-search" onclick="PageReportfive.funSearch()" plain="true"><label>查询</label></a>
+                <a class="mini-button" iconCls="icon-reset" onclick="PageReportfive.funReset()" plain="true"><label>重置</label></a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
                     <div field="shipNo" width="120" headerAlign="center" allowSort="true">船号</div>
                     <div field="preWeight" width="120" headerAlign="center" allowSort="true" >预报吨位</div>
                     <div field="mobile" width="120" headerAlign="center" allowSort="true">电话</div>
-                    <div field="preArriveTime" width="120" headerAlign="center" allowSort="true">空船到港时间</div>
+                    <div field="preArriveTime" width="120" headerAlign="center" allowSort="true"  renderer="PageMain.funFromDateInfo">空船到港时间</div>
 					 <div field="selfBuckle" width="50" headerAlign="center" allowSort="true">封舱网片</div>
                     <div field="buildFactory" width="120" headerAlign="center" allowSort="true">备注</div>
                 </div>

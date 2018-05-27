@@ -2,7 +2,8 @@ var PageReportthree = function(){
     return {
         defaultOption: {
             basePath:"",
-            reportthreeGrid : null
+            reportthreeGrid : null,
+            shipNoData:[]
         },
         init :function ()
         {
@@ -10,10 +11,9 @@ var PageReportthree = function(){
             this.basePath = PageMain.basePath;
             this.reportthreeGrid = mini.get("reportthreeGrid");
             this.reportthreeGrid.setUrl(PageMain.defaultOption.httpUrl + "/dispatch/getReportThreeList");
-            /*PageMain.callAjax(PageMain.defaultOption.httpUrl + "/dispatch/getReportThreeList", {queryParamFlag:1}, function (data) {
-                console.log(data);
-
-            });*/
+            PageMain.callAjax(PageMain.defaultOption.httpUrl + "/ship/getList",{pageSize:100000}, function (data) {
+                PageReportthree.defaultOption.shipNoData = data.data.list;
+            });
             var _reportThreeGrid = mini.get("reportthreeGrid");
             // _reportThreeGrid.set({
             //     columns: [
@@ -66,6 +66,17 @@ var PageReportthree = function(){
         funOperRenderer : function(e)
         {
             return '<a class="mini-button-icon mini-iconfont icon-detail" style="display: inline-block;  height:16px;padding:0 10px;" title="详情查看" href="javascript:PageReportfive.funDetail()"></a>';
+        },
+        funShipIdRenderer : function (e)//船号转码
+        {
+            for(var nItem = 0; nItem < PageReportthree.defaultOption.shipNoData.length; nItem++)
+            {
+                if(e.value == PageReportthree.defaultOption.shipNoData[nItem].id)
+                {
+                    return PageReportthree.defaultOption.shipNoData[nItem].shipNo;
+                }
+            }
+            return e.value;
         },
         funReset : function()
         {

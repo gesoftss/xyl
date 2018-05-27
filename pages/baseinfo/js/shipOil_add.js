@@ -15,6 +15,8 @@ var PageShipOilAdd = function(){
         funSetData : function(data)
         {
         	var row = data.row;
+            mini.get("shipId").setData(row.shipIdFly);
+            mini.get("status").setData(row.statusData)
         	this.action = data.action;
         	this.shipForm.setData(row);
             if(this.action == "oper")
